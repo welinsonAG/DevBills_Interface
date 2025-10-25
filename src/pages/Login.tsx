@@ -2,13 +2,16 @@ import { useNavigate} from 'react-router'
 import GoogleLoginButton from "../components/GoogleLoginButton"
 import { useAuth } from "../context/AuthContext"
 import { useEffect } from 'react';
+import { signInWithPopup } from 'firebase/auth';
 
-
+import { firebaseAuth, googleAuthProvider } from '../config/firebase';
 const Login = () => {
     const { signWithGoogle, authState } = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = async () => {
+        const result = await signInWithPopup( firebaseAuth, googleAuthProvider);
+        console.log(result)
         try {
             await signWithGoogle();
         } catch (err) {
