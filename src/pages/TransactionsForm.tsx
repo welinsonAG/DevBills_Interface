@@ -56,7 +56,8 @@ const TransactionsForm = () => {
     
   }, []);
 
-  const filteredCategories = categories.filter((category) => category.type === formData.type);
+
+  const filteredCategories = categories.filter((category) => category.type.toLowerCase() === formData.type.toLowerCase());
 
   const validadeForm = (): boolean => {
     if (!formData.description.trim() || !formData.amount || !formData.date || !formData.categoryId) {
