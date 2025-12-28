@@ -1,29 +1,26 @@
-import axios,{type AxiosInstance, type InternalAxiosRequestConfig} from 'axios'
-import { firebaseAuth } from '../config/firebase'
-
-
+import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from "axios";
+import { firebaseAuth } from "../config/firebase";
 
 export const api: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL ,
-    timeout: 10000,
-})
-
-
+  baseURL: import.meta.env.VITE_API_URL,
+  timeout: 10000,
+});
 
 api.interceptors.request.use(
-    async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
-        const user = firebaseAuth.currentUser
+  async (
+    config: InternalAxiosRequestConfig
+  ): Promise<InternalAxiosRequestConfig> => {
+    const user = firebaseAuth.currentUser;
 
-        if(user){
-            try{
-const token = await user.getIdToken()
-config.headers.set("Authorization", `Bearer ${token}`)
-    
+    if (user) {
+      try {
+        const token = await user.getIdToken();
+        config.headers.Authorization = `Bearer ${token}`;
+      } catch (err) {
+        console.error("Erro ao obter token do usuário no Firebase", err);
+      }
+    }
 
- }catch(err){
-console.error("Erro ao obter token do usuário no Firebese", err)
-            }
-        }
-        return config;
-    },
+    return config;
+  }
 );

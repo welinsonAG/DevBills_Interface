@@ -27,7 +27,7 @@ const GoogleLoginButton = ({ isLoading, onClick }: GoogleLoginProps) => {
                     d="M12.0004 24C15.2404 24 17.9654 22.94 19.9354 21.19L16.0704 18.1C15.0004 18.81 13.6204 19.25 12.0004 19.25C8.8704 19.25 6.2154 17.14 5.2704 14.3L1.2894 17.39C3.2554 21.31 7.3104 24 12.0004 24Z"
                     fill="#34A853"
                 />
-            </svg>;
+            </svg>
 
             Entrar com Google
         </Button>

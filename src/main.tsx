@@ -7,5 +7,5 @@ import AppRoutes from './routes/index.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppRoutes />
-  </StrictMode>,
+   </StrictMode>, 
 )

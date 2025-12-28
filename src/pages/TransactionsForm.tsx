@@ -39,6 +39,7 @@ const TransactionsForm = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData)
   const [error, setError] = useState<string | null>(null);
   const [descriptionError, setDescriptionError] = useState<string | null>(null);
+  const [loading,setLoading ] = useState<boolean>(false);
 
   const formId = useId()
   const navigate = useNavigate()
@@ -46,10 +47,13 @@ const TransactionsForm = () => {
   useEffect(() => {
     const fetchCategories = async (): Promise<void> => {
       const response = await getCategories();
+        console.log("📦 Categorias recebidas da API:", response);
       setCategories(response);
+      
     };
 
     fetchCategories();
+    
   }, []);
 
   const filteredCategories = categories.filter((category) => category.type === formData.type);
@@ -83,7 +87,8 @@ const TransactionsForm = () => {
 
   const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
-    setDescriptionError(null)
+    setLoading (true);
+    setDescriptionError(null);
 
     try {
       if (!validadeForm()) {
@@ -95,7 +100,7 @@ const TransactionsForm = () => {
         amount: formData.amount,
         categoryId: formData.categoryId,
         type: formData.type,
-        date: new Date(formData.date).toISOString(),
+        date: `${formData.date}T12:00:00.000Z`,
       };
 
       await createTransaction(transactionData);
@@ -103,10 +108,13 @@ const TransactionsForm = () => {
       navigate("/transacoes")
     } catch (err) {
       toast.error("Falha ao adicionar a transação")
-    };
+    }
 
+      finally{
+       setLoading (false)
+      }
     console.log("Salvando...");
-  }
+  };
 
   const handleCancel = () => {
     navigate("/transacoes")
@@ -187,13 +195,24 @@ const TransactionsForm = () => {
             />
 
             <div className="flex justify-end space-x-3 mt-2">
-              <Button variant="outline" onClick={handleCancel} type="button">
+              <Button variant="outline" onClick={handleCancel} type="button" disabled={loading}>
                 Cancelar
               </Button>
-              <Button type="submit"
+              <Button 
+               disabled={loading}
+              type="submit"
                 variant={formData.type === TransactionType.EXPENSE ? "danger" : "success"}
               >
+                {loading ? (
+                    <div className="flex items-center justify-center ">
+
+            <div className="w-4 h-4 border-4 border-gray-700 border-t-transparent rounded-full animate-spin" />
+          </div>
+                  ):(
+
+              
                 <Save className="w-4 h-4 mr-2" />
+                    )}
                 Sarval
               </Button>
             </div>

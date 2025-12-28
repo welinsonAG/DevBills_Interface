@@ -44,6 +44,7 @@ const Select = ({
                 )}
 
                 <select
+                
                     id={selectId}   {...rest}
                     className={`block w-full bg-gray-800 py-3 pl-10 pr-4 rounded-xl text-gray-50 text-sm  border ${error ? "border-red-500" : "border-primary-500"}
           ${error ? "focus:border-red-500 " : " focus:border-primary-500"} outline-none appearance-none`}
@@ -54,6 +55,7 @@ const Select = ({
                             {option.label}
                         </option>
                     ))}
+                    
                 </select>
 
                 <div className="absolute inset-y-0  right-0 flex items-center pr-3">

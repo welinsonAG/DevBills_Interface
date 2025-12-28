@@ -40,7 +40,7 @@ export const deleteTransactions = async (id: string): Promise<void> => {
 };
 
 export const createTransaction = async (transactionData: CreateTransactionDTO,): Promise<Transaction> => {
-    const response = await api.post<Transaction>("transaction", transactionData);
+    const response = await api.post<Transaction>("/transactions", transactionData);
 
     return response.data;
 
